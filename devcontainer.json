@@ -1,0 +1,42 @@
+{
+  // Gir containeren et navn i Codespaces
+  "name": "Warp Unlimited Android Dev",
+
+  // Funksjoner installeres før Codespace‑start.
+  "features": {
+    // Installerer et JDK via SDKMAN! – nødvendig for Gradle/Android‑bygg
+    "ghcr.io/devcontainers/features/java": {
+      "version": "1"
+    },
+    // Installerer Android SDK og verktøy. Lisensene aksepteres automatisk.
+    "ghcr.io/nordcominc/devcontainer-features/android-sdk": {
+      "version": "1",
+      "accept_sdk_licenses": true
+      // Du kan eventuelt legge til flere SDK‑pakker i "packages"
+      // Eksempel: "packages": ["platforms;android-34", "build-tools;34.0.0"]
+    }
+  },
+
+  // VS Code‑utvidelser som anbefales for Android‑utvikling
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-androidtools.vscode-android", // Android‑støtte (IntelliSense, build, run)
+        "redhat.java",                    // Java‑språkstøtte
+        "vscjava.vscode-java-pack",       // Java‑pakke med Gradle/Maven
+        "ms-python.python"               // Eventuelt for Python‑scripts
+      ]
+    }
+  },
+
+  // Kommandoer som kjøres etter at containeren er opprettet:
+  // 1. Aksepterer alle Android‑SDK‑lisenser.
+  // 2. Kjør gradlew assembleDebug for å bygge appen første gang (ignorerer feil).
+  "postCreateCommand": "yes | sdkmanager --licenses && ./gradlew assembleDebug || true",
+
+  // Forwarder Android‑emulatorens standard ADB‑port hvis du bruker emulator i container.
+  "forwardPorts": [5554],
+
+  // Åpner workspace‑mappen automatisk (tilpass denne stien til repo‑oppsettet ditt).
+  "workspaceFolder": "/workspaces/warp-unlimited"
+}
